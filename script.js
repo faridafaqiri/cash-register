@@ -21,7 +21,7 @@ document.getElementById('price').innerHTML = `<b>Price: </b> $${price}`;
 
 const displayCashDrawer = () => {
   displayCid.innerHTML = '<h4>Cash in Drawer:</h4>';
-  displayCid.innerHTML += cid.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
+  displayCid.innerHTML += cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
 };
 
 const calculateChange = (cash, price, cid) => {
@@ -36,7 +36,7 @@ const calculateChange = (cash, price, cid) => {
   const changeArr = [];
   const cidCopy = [...cid].reverse();
 
-  for (let i = 0; i < currencyUnit.length; i++) {
+  for (let i = 0; i < currencyUnit.length; i += 1) {
     let totalCurrency = 0;
     while (change >= currencyUnit[i] && cidCopy[i][1] > 0) {
       cidCopy[i][1] = Number((cidCopy[i][1] - currencyUnit[i]).toFixed(2));
@@ -57,7 +57,7 @@ const displayChange = (result) => {
   } else if (result.status === 'INSUFFICIENT_FUNDS') {
     changeDueDiv.innerText = 'Status: INSUFFICIENT_FUNDS';
   } else {
-    changeDueDiv.innerHTML = `Status: ${result.status}<br>${result.change.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+    changeDueDiv.innerHTML = `Status: ${result.status}<br>${result.change.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
   }
 };
 
