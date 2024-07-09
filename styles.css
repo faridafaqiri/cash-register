@@ -2,7 +2,7 @@ body {
   background-image: url(./images/close-up-credit-card-machine_44622-148.jpg);
   background-repeat: no-repeat;
   background-size: 1300px 1400px;
-  color: #ffffff;
+  color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
 }
@@ -18,10 +18,11 @@ body {
 
 h1 {
   margin-bottom: 20px;
-  color: #000000;
+  color: #000;
 }
 
-input, button {
+input,
+button {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
@@ -29,8 +30,8 @@ input, button {
 }
 
 button {
-  background-color: #ffcc00;
-  color: #000000;
+  background-color: #fc0;
+  color: #000;
   border: none;
   cursor: pointer;
 }
@@ -39,9 +40,11 @@ button:hover {
   background-color: #ffaa00;
 }
 
-#cash-in-drawer, #change-due {
-  color: #000000;
+#cash-in-drawer,
+#change-due {
+  color: #000;
 }
+
 @media (max-width: 768px) {
   .container {
   padding: 10px;
