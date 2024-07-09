@@ -37,7 +37,7 @@ button {
 }
 
 button:hover {
-  background-color: #fc0;
+  background-color: orange;
 }
 
 #cash-in-drawer,
@@ -47,19 +47,17 @@ button:hover {
 
 @media (max-width: 768px) {
   .container {
-  padding: 10px;
+    padding: 10px;
   }
-
 }
 
 @media (max-width: 480px) {
   .container {
-  padding: 5px;
+    padding: 5px;
   }
 
   input,
   button {
-  padding: 5px;
+    padding: 5px;
   }
-
 }
