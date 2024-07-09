@@ -21,60 +21,50 @@ document.getElementById('price').innerHTML = `<b>Price: </b> $${price}`;
 
 const displayCashDrawer = () => {
   displayCid.innerHTML = '<h4>Cash in Drawer:</h4>';
-  displayCid.innerHTML += cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
+  displayCid.innerHTML += cid.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
+};
+
+const calculateChange = (cash, price, cid) => {
+  let change = Number((cash - price).toFixed(2));
+  const totalCid = Number(cid.reduce((total, sum) => total + sum[1], 0).toFixed(2));
+  if (cash < price) return { status: 'INSUFFICIENT_FUNDS', change: [] };
+  if (cash === price) return { status: 'EXACT_PAYMENT', change: [] };
+  if (change > totalCid) return { status: 'INSUFFICIENT_FUNDS', change: [] };
+
+  const currencyUnit = [0.01, 0.05, 0.1, 0.25, 1, 5, 10, 20, 100].reverse();
+  const currencyUnitName = ['PENNY', 'NICKEL', 'DIME', 'QUARTER', 'ONE', 'FIVE', 'TEN', 'TWENTY', 'ONE HUNDRED'].reverse();
+  const changeArr = [];
+  const cidCopy = [...cid].reverse();
+
+  for (let i = 0; i < currencyUnit.length; i++) {
+    let totalCurrency = 0;
+    while (change >= currencyUnit[i] && cidCopy[i][1] > 0) {
+      cidCopy[i][1] = Number((cidCopy[i][1] - currencyUnit[i]).toFixed(2));
+      change = Number((change - currencyUnit[i]).toFixed(2));
+      totalCurrency += currencyUnit[i];
+    }
+    if (totalCurrency > 0) changeArr.push([currencyUnitName[i], totalCurrency]);
+  }
+
+  if (change > 0) return { status: 'INSUFFICIENT_FUNDS', change: [] };
+  const remainCid = cidCopy.reduce((total, sum) => total + sum[1], 0);
+  return { status: remainCid === 0 ? 'CLOSED' : 'OPEN', change: changeArr };
+};
+
+const displayChange = (result) => {
+  if (result.status === 'EXACT_PAYMENT') {
+    changeDueDiv.innerText = 'No change due - customer paid with exact cash';
+  } else if (result.status === 'INSUFFICIENT_FUNDS') {
+    changeDueDiv.innerText = 'Status: INSUFFICIENT_FUNDS';
+  } else {
+    changeDueDiv.innerHTML = `Status: ${result.status}<br>${result.change.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+  }
 };
 
 const checkCashRegister = () => {
   const cashIntg = parseFloat(cashInput.value);
-  let change = Number((cashIntg - price).toFixed(2));
-  const totalCid = Number(cid.reduce((total, sum) => total + sum[1], 0).toFixed(2));
-
-  changeDueDiv.innerHTML = `<b>Change: </b> $${change}`;
-  if (cashIntg < price) {
-    changeDueDiv.innerText = 'Customer does not have enough money to purchase the item';
-    return;
-  }
-  if (cashIntg === price) {
-    changeDueDiv.innerText = 'No change due - customer paid with exact cash';
-    return;
-  }
-  if (change > totalCid) {
-    changeDueDiv.innerText = 'Status: INSUFFICIENT_FUNDS';
-    return;
-  }
-
-  const currencyUnit = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01];
-  const currencyUnitName = ['ONE HUNDRED', 'TWENTY', 'TEN', 'FIVE', 'ONE', 'QUARTER', 'DIME', 'NICKEL', 'PENNY'];
-  const changeArr = [];
-  const cidShow = [...cid];
-
-  for (let i = 0; i < currencyUnit.length; i += 1) {
-    let totalCurrency = 0;
-    while (change >= currencyUnit[i] &&
-      cidShow[cidShow.length - 1 - i][1] > 0) {
-      cidShow[cidShow.length - 1 - i][1] = Number((cidShow[cidShow.length - 1 - i][1] - currencyUnit[i]).toFixed(2));
-      change = Number((change - currencyUnit[i]).toFixed(2));
-      totalCurrency += currencyUnit[i];
-    }
-    if (totalCurrency > 0) {
-      changeArr.push([currencyUnitName[i], totalCurrency]);
-    }
-  }
-
-  if (change > 0) {
-    changeDueDiv.innerText = 'Status: INSUFFICIENT_FUNDS';
-    return;
-  }
-  const remainCid = cidShow.reduce((total, sum) => total + sum[1], 0);
-  if (remainCid === 0) {
-    changeDueDiv.innerHTML = `Status: CLOSED<br>${
-      changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')
-    }`;
-  } else {
-    changeDueDiv.innerHTML = `Status: OPEN<br>${
-      changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')
-    }`;
-  }
+  const result = calculateChange(cashIntg, price, cid);
+  displayChange(result);
   displayCashDrawer();
 };
 
@@ -88,7 +78,5 @@ window.onload = displayCashDrawer;
 purchaseBtn.addEventListener('click', checkCashRegister);
 clearBtn.addEventListener('click', clearData);
 cashInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    checkCashRegister();
-  }
+  if (e.key === 'Enter') checkCashRegister();
 });

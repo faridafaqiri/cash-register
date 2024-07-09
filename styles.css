@@ -54,10 +54,12 @@ button:hover {
 @media (max-width: 480px) {
   .container {
     padding: 5px;
+    width: 80%;
   }
 
   input,
   button {
     padding: 5px;
+    width: 70%;
   }
 }
