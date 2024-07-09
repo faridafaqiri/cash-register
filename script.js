@@ -5,7 +5,7 @@ const changeDueDiv = document.getElementById('change-due');
 const displayCid = document.getElementById('cash-in-drawer');
 
 const price = 3.26;
-let cid = [
+const cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
   ['DIME', 3.1],
@@ -19,6 +19,11 @@ let cid = [
 
 document.getElementById('price').innerHTML = `<b>Price: </b> $${price}`;
 
+const displayCashDrawer = () => {
+  displayCid.innerHTML = '<h4>Cash in Drawer:</h4>' +
+    cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
+};
+
 const checkCashRegister = () => {
   const cashIntg = parseFloat(cashInput.value);
   let change = Number((cashIntg - price).toFixed(2));
@@ -26,12 +31,14 @@ const checkCashRegister = () => {
 
   changeDueDiv.innerHTML = `<b>Change: </b> $${change}`;
   if (cashIntg < price) {
-    alert('Customer does not have enough money to purchase the item');
+    changeDueDiv.innerText = 'Customer does not have enough money to purchase the item';
     return;
-  } else if (cashIntg === price) {
+  } 
+  if (cashIntg === price) {
     changeDueDiv.innerText = 'No change due - customer paid with exact cash';
     return;
-  } else if (change > totalCid) {
+  }
+  if (change > totalCid) {
     changeDueDiv.innerText = 'Status: INSUFFICIENT_FUNDS';
     return;
   }
@@ -59,15 +66,11 @@ const checkCashRegister = () => {
   }
   const remainCid = cidShow.reduce((total, sum) => total + sum[1], 0);
   if (remainCid === 0) {
-    changeDueDiv.innerHTML = `Status: CLOSED<br>${changeArr.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+    changeDueDiv.innerHTML = `Status: CLOSED<br>${changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
   } else {
-    changeDueDiv.innerHTML = `Status: OPEN<br>${changeArr.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+    changeDueDiv.innerHTML = `Status: OPEN<br>${changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
   }
   displayCashDrawer();
-};
-
-const displayCashDrawer = () => {
-  displayCid.innerHTML = '<h4>Cash in Drawer:</h4>' + cid.map(cash => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
 };
 
 const clearData = () => {
