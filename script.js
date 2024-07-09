@@ -20,8 +20,8 @@ const cid = [
 document.getElementById('price').innerHTML = `<b>Price: </b> $${price}`;
 
 const displayCashDrawer = () => {
-  displayCid.innerHTML = `<h4>Cash in Drawer:</h4>` + 
-    cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
+  displayCid.innerHTML += `<h4>Cash in Drawer:</h4>`;
+  cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
 };
 
 const checkCashRegister = () => {
@@ -50,7 +50,8 @@ const checkCashRegister = () => {
 
   for (let i = 0; i < currencyUnit.length; i += 1) {
     let totalCurrency = 0;
-    while (change >= currencyUnit[i] && cidShow[cidShow.length - 1 - i][1] > 0) {
+    while (change >= currencyUnit[i] &&
+      cidShow[cidShow.length - 1 - i][1] > 0) {
       cidShow[cidShow.length - 1 - i][1] = Number((cidShow[cidShow.length - 1 - i][1] - currencyUnit[i]).toFixed(2));
       change = Number((change - currencyUnit[i]).toFixed(2));
       totalCurrency += currencyUnit[i];
