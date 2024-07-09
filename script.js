@@ -62,6 +62,7 @@ const displayChange = (result) => {
 };
 
 const checkCashRegister = () => {
+  console.log('checkCashRegister called');
   const cashIntg = parseFloat(cashInput.value);
   const result = calculateChange(cashIntg, price, cid);
   displayChange(result);
@@ -69,6 +70,7 @@ const checkCashRegister = () => {
 };
 
 const clearData = () => {
+  console.log('clearData called');
   cashInput.value = '';
   changeDueDiv.innerHTML = '';
   displayCashDrawer();
