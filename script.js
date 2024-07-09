@@ -20,7 +20,7 @@ const cid = [
 document.getElementById('price').innerHTML = `<b>Price: </b> $${price}`;
 
 const displayCashDrawer = () => {
-  displayCid.innerHTML = '<h4>Cash in Drawer:</h4>' +
+  displayCid.innerHTML = `<h4>Cash in Drawer:</h4>` + 
     cid.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>');
 };
 
@@ -33,7 +33,7 @@ const checkCashRegister = () => {
   if (cashIntg < price) {
     changeDueDiv.innerText = 'Customer does not have enough money to purchase the item';
     return;
-  } 
+  }
   if (cashIntg === price) {
     changeDueDiv.innerText = 'No change due - customer paid with exact cash';
     return;
@@ -66,9 +66,13 @@ const checkCashRegister = () => {
   }
   const remainCid = cidShow.reduce((total, sum) => total + sum[1], 0);
   if (remainCid === 0) {
-    changeDueDiv.innerHTML = `Status: CLOSED<br>${changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+    changeDueDiv.innerHTML = `Status: CLOSED<br>${
+      changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')
+    }`;
   } else {
-    changeDueDiv.innerHTML = `Status: OPEN<br>${changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')}`;
+    changeDueDiv.innerHTML = `Status: OPEN<br>${
+      changeArr.map((cash) => `${cash[0]}: $${cash[1].toFixed(2)}`).join('<br>')
+    }`;
   }
   displayCashDrawer();
 };
