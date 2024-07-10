@@ -27,7 +27,7 @@ const displayCashDrawer = () => {
 const calculateChange = (cash, price, cid) => {
   let change = Number((cash - price).toFixed(2));
   const totalCid = Number(cid.reduce((total, sum) => total + sum[1], 0).toFixed(2));
-  if (cash < price) return { status: 'INSUFFICIENT_FUNDS', change: [] };
+  if (cash < price) return { status: 'Customer does not have enough money to purchase the item', change: [] };
   if (cash === price) return { status: 'EXACT_PAYMENT', change: [] };
   if (change > totalCid) return { status: 'INSUFFICIENT_FUNDS', change: [] };
 
