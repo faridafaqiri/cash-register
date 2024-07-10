@@ -1,7 +1,9 @@
 body {
   background-image: url(./images/close-up-credit-card-machine_44622-148.jpg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 1300px 1500px;
+  background-position-y: center;
+  background-position-x: center;
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
