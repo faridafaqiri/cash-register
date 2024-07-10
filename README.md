@@ -6,6 +6,10 @@ A simple cash register application that calculates the change due when a custome
 
 ![Project Demo](./images/capture.JPG)
 
+## Live Link
+
+https://faridafaqiri.github.io/cash-register/
+
 ## Features ⭐
 
 - Input the amount of cash given by the customer.
